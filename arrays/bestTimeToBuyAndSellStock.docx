@@ -1,0 +1,48 @@
+Approach 1: Brute Force
+1. Find all possible pairs
+2. For each pair, find the pair giving maximum difference/profit
+
+Code:
+
+       n = len(prices);
+       max_profit = 0
+
+
+       for i in range(n):
+           for j in range(i+1, n):
+
+
+               max_profit = max(max_profit, prices[j]-prices[i])
+
+
+       return max_profit
+
+Time -> O(n^2)
+Space -> O(1)
+
+______________________________________________________________________________________________________________________________________
+
+Approach 2: Efficient/ 2 pointer
+1. Let initial price be the buying price
+2. Iterate over the array from index 2
+3. Calculate  current price - buying price and update max_profit accordingly
+4. If it is found that current price is lesser than buying price, we will update buying price to current price
+
+Code:
+
+buy = prices[0]
+max_profit = 0
+      
+for sell in prices[1:]:
+          
+     max_profit = max(max_profit, sell-buy)
+          
+      if sell < buy:
+           buy = sell
+              
+ return max_profit
+
+
+Time -> O(n)
+Space -> O(1)
+

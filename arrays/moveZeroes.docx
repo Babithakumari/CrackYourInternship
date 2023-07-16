@@ -1,0 +1,88 @@
+Approach 1: Do as the question says/ Space sub-optimal
+1)Keep all nonzero digits together
+2)Move all zeroes to the end
+
+Code:
+
+   int n = len(nums);
+
+    // Make all the non-zero elements retain their original order. And Count the zeroes
+    ans = list();
+    for (int i = 0; i < n; i++):
+        if (nums[i] != 0):
+            ans.append(nums[i]);
+      
+        else:
+	numZeroes +=1
+
+
+    // Move all zeroes to the end
+    while (numZeroes–):
+        ans.append(0);
+    
+
+    // Combine the result
+    for (int i = 0; i < n; i++):
+        nums[i] = ans[i];
+
+
+Time -> O(n)
+Space -> O(n)
+
+
+
+
+
+_________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+Approach 2: Optimal Solution/ Two Pointer - Slow Fast Pointer
+1) Slow pointer ‘LastNonzeroIndex’ keeps track of last position of a nonzero number, initially set to -1
+2)Fast pointer ‘cur’ processes new elements, if a non-zero element found then it is recorded at ‘LastNonzeroIndex+1’th position. 
+3)Once ‘cur’ reaches end of array all non-zero elements processed successfully, now to fulfill 2nd requirement(all zeroes at end), we just fill all positions from ‘LastNonzeroIndex+1’th position to end with ‘0’.
+
+Code:
+
+       n = len(nums)
+      
+       # base
+       if n==1:
+           return nums
+      
+       lastNonZero = -1
+       j = 0
+      
+       while j<n:
+          
+           if nums[j]!=0:
+               nums[lastNonZero+1] = nums[j]
+               lastNonZero+=1
+              
+           j+=1
+          
+       # mark all field after lastNonZero as 0
+       i = lastNonZero+1
+      
+       while i<n:
+           nums[i] = 0
+           i+=1
+
+
+
+
+  
+Time -> O(n)
+Space -> O(1)
+
+

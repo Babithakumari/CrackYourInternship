@@ -1,0 +1,73 @@
+Approach 1: Brute Force
+Find all possible triplets
+Find all triplets that sum to 0
+
+Time Complexity => O(n^3)
+Space Complexity => O(n) (to store all triplets)
+
+Code:
+triples = set()
+
+
+   for i in range(n):
+       for j in range(i+1,n):
+           for k in range(j+1,n):
+               if arr[i] + arr[j] + arr[k] == 0:
+                   triples.add(arr[i], arr[j], arr[k])
+
+
+   return triples
+
+_________________________________________________________________________________________________
+
+Approach 2: Efficient/ 2 pointer approach
+Fix one element
+Solve rest of the problem using 2 pointer approach
+
+Extra Requirement: To avoid duplicate triplets
+
+Code:
+# sort nums
+        nums = sorted(nums)
+        res = []
+        # keep track of visited triplets
+        visited = set()
+        
+        # fix 1st element
+        for i in range(len(nums)-2):
+            
+            # check if already visited
+            if nums[i] in visited:
+                continue
+            
+            # if cur element is 4 need -4 to get 0
+            visited.add(nums[i])
+            target = nums[i]*(-1)
+            
+            # find 2 elements that sum upto a(negative number)
+            
+            # continue with TwoSumII
+            start = i+1
+            end = len(nums)-1
+            
+            while start < end:
+                cur_sum = nums[start] + nums[end]
+                
+                if cur_sum == target:
+                    res.append([nums[i], nums[start], nums[end] ])
+                    start += 1
+                    
+                    # if new start same as prev keep incrementing, also make sure start<end
+                    while nums[start] == nums[start-1] and start<end:
+                        start += 1
+                        
+                elif  cur_sum > target:
+                    end -= 1
+                    
+                else:
+                    start += 1
+                    
+                    
+        return res
+                
+      

@@ -1,0 +1,36 @@
+Approach 1: Brute Force
+1)Generate all possible subarrays of length m
+2)For each such subarray, find the difference between largest and smallest entry within the subarray. Update min-difference accordingly
+
+Time-> O(n^2)
+Space -> O(1)
+
+Approach 2: Efficient Approach
+1)Sort the array
+2)Initialize min_diff to INT_MAX
+3)find all subarrays of size ‘m’
+4)Loop from 0 to n-m, calculate min_diff at each point and update min_diff accordingly
+
+Code:
+
+    	# if no of choc is 0 or no of stu is 0
+    	if M==0 or N==0:
+        	return 0
+       	 
+    	# if no of stu greater than choc
+    	if M>N:
+        	return -1
+       	 
+    	A.sort()
+   	 
+    	# initialize
+    	min_diff = A[N-1]-A[0]
+   	 
+    	for i in range(N-M+1):
+       	 
+        	min_diff = min(min_diff, A[i+M-1]-A[i])
+       	 
+    	return min_diff
+
+Time-> O(n)
+Space -> O(1)
