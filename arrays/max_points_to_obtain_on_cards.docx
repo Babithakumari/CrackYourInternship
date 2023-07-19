@@ -1,0 +1,59 @@
+Approach 1: Brute Force
+1)Find all possible combinations of ‘k’ cards and calculate score for each combination
+
+Time Complexity => O(k^2)
+Space Complexity => O(1)
+
+
+Approach 2: Efficient Solution/ Sliding window
+1)The idea is to create a window of size n-k so that exactly k-elements are left out that will give the max-sum possible
+2) Therefore we always calculate sum of all the elements out of the window which might be the potential result
+3) The idea is to start with a window of size n-k, therefore last k-elements are considered potential result. 
+4) Now we move the window towards the right(simultaneously reduce on the left) to move to the combination of (k-1) elements on the right and 1element on the right which gives us k-elements again
+5) we keep moving right until no more elements left.
+
+Example:
+1 2 3 4 5 6 1 
+i         j               : Initial tsum = sum(arr[j:]) => 12
+
+1 2 3 4 5 6 1 
+   i         j           : tsum += arr[i]-arr[j]=> 12+1-5=> 8 (1 6 1)
+And so on
+
+
+
+Time Complexity 
+=> O(k)
+Space Complexity => O(1)
+
+Code:
+
+       n = len(cardPoints)
+
+
+       l,r = 0, n-k
+
+
+       #initial sum will be sum of last(k) values
+       tsum = sum(cardPoints[r:])
+
+
+       # let result be initialized to inital sum
+       res = tsum
+
+
+       while r < n:
+
+
+           # add/ move window towards right and reduce on the left
+           tsum += cardPoints[l] - cardPoints[r]
+           res = max(res, tsum)
+
+
+           # update pointers accordingly
+           l+=1
+           r+=1
+
+
+       return res
+
