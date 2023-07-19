@@ -1,0 +1,46 @@
+Approach 1: Follow the traversal
+1) move from top left to top right, increment top(since top row visited completely)
+2)move from top-right to bottom-right, decrement right(column visited)
+3)move from bottom right to bottom left, decrement bottom counter
+4)move from bottom left to top left, increment left counter
+5)do this until top < bottom and left<right
+
+
+Code
+ m =len(mat)
+       n =len(mat[0])
+      
+       top,left = 0,0
+       bottom,right = m-1,n-1
+       res = []
+      
+       while top<=bottom and left<=right:
+           # move from top-left to top-right
+           for i in range(left,right+1):
+               print(f"{mat[top][i]}")
+               res.append(mat[top][i])
+              
+           top+=1
+              
+           # move from top-right to bottom-right
+           for i in range(top,bottom+1):
+               print(f"{mat[i][right]}")
+               res.append(mat[i][right])
+           right-=1
+
+
+           # for single rows/ or single columns
+           if top>bottom or left>right:
+               break
+          
+           # move from bottom right to bottom-left
+           for i in range(right,left-1,-1):
+               res.append(mat[bottom][i])
+           bottom-=1
+              
+           # move from bottom left to top-left
+           for i in range(bottom,top-1,-1):
+               res.append(mat[i][left])
+           left+=1
+          
+       return res

@@ -1,0 +1,77 @@
+Approach 1: Brute Force
+1)Find all possible subarrays.
+2)Count subarrays with sum equals target
+
+Time Complexity => O(n^2)
+Space Complexity => O(1)
+
+
+Approach 2: Efficient Solution/ HashMap 
+
+1) 2 kinds of subarrays exist, starts from initial point and ends at a particular index
+And second that starts midway within the array and ends midway
+
+2)To find all subarrays of the first kind just keep adding the elements of array until u arrive at a situation where sum equals target
+
+3)To find the second kind of subarrays(midway), an intelligent approach is used:
+Suppose sum of elements from start to index m is s1 
+sum of elements from start to index n (m>n) is  s2
+So sum of elements from m to n will be s2-s1
+If suppose s2-s1==k then all elements between m and n form a subarray of sum ‘k’
+The idea is to find all those s1’s which when subtracted from current subarray can give ‘k’
+.: s1 = s2-k 
+
+Algorithm:
+1)Use a hashMap to store occurrences of all subarray sums alongwith their frequencies
+2)Iterate over the array
+3)At each step calculate cursum
+4) if cursum==target: increment counter(1st kind of subarray)
+5)if cursum-target in hashMap: means there exists some form of subarray sum which when subtracted from cursum gives sum equivalent to ‘k’.
+Therefore increment counter as many such subarray sums exist.
+
+
+
+
+
+
+
+
+
+
+Code:
+       hashMap = defaultdict(lambda:0)
+       count = 0
+       curSum = 0
+
+
+       for num in nums:
+
+
+           curSum += num
+
+
+           if curSum == k:
+               print(f"{k} {curSum} {hashMap}")
+               count += 1
+
+
+           if curSum-k in hashMap:
+              
+               count += hashMap[curSum-k]
+
+
+           hashMap[curSum] += 1
+
+
+       return count
+
+
+
+
+
+
+
+Time Complexity => O(n)
+Space Complexity => O(1)
+
+
