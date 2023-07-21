@@ -1,0 +1,45 @@
+Approach 1: 2 pointer
+1) Maintain 3 pointers namely i,j,k where i points to last occupied index of array1, j points to last index of array2 and k points to index of insertion which is initially end of array 1(m+n-1)
+2) Run a while loop until both i and j are >0(valid indices).
+3) At each point check if nums1[i] > nums2[j] then nums1[k] is occupied of nums1[i]  decrement i otherwise nums2[j] and decrement j
+4) decrement k always to move to next empty position
+
+
+Edge case 
+Suppose nums1 = 4 5 6 0   and nums2 = 1
+Here i reaches negative index earlier but j is still greater than 0, this symbolises that nums2[j] points to a value lesser than all elements of nums1, therefore must occupy initial position. Hence run a while to occupy rest of the elements of nums2 from index j to 0 at position k
+
+
+
+
+Code : 
+
+
+
+
+ i=m-1
+       j=n-1
+       k = m+n-1
+
+
+       while i>=0 and j>=0:
+           print(f"i={i} j={j}")
+           if nums1[i] > nums2[j]:
+               nums1[k] = nums1[i]
+               i-=1
+
+
+           else:
+               nums1[k] = nums2[j]
+               j-=1
+
+
+
+
+           k-=1
+
+
+       while j>=0:
+           nums1[k] = nums2[j]
+           j-=1
+           k-= 1

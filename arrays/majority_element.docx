@@ -1,0 +1,110 @@
+Approach 1: Brute force
+1) Find all possible duplicates of each element, if number of duplicates is greater than n/2, return the element
+2) Use nested loops
+
+
+Time Complexity => O(n^2)
+Space Complexity => O(1)
+
+
+Approach 2: HashMap
+1)  Build a hashMap to store frequency of all elements, this will require iterating over all elements atleast once
+2) Iterate over the hashMap to find the element with freq > n/2
+
+
+Time Complexity => O(n)
+Space Complexity => O(n)
+
+
+Code : 
+       hashMap = defaultdict(lambda:0)
+        max_freq = 0 
+        
+        for num in nums:
+            hashMap[num] += 1
+            
+            if hashMap[num] > max_freq:
+                res = num
+                max_freq = hashMap[num]
+         
+        
+        return res
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Approach 3: Sorting
+1) Sort the elements
+2) The idea is: element repeating more than n/2 times must definitely exist in the middle index, therefore return the element and middle index
+
+
+
+
+Time Complexity => O(nlogn)
+Space Complexity => O(1)
+
+
+Code : 
+      n = len(nums)
+        nums.sort()
+
+
+        return nums[n//2]
+
+
+Approach 3: Boyer Moore Voting Algorithm
+
+
+The Boyer-Moore voting algorithm is one of the popular optimal algorithms which is used to find the majority element among the given elements that have more than N/ 2 occurrences.
+
+
+Working:
+1)Initialize votes to 0 and candidate to -1
+2)Traverse over the given array:
+	a) if votes=0, set candidate to the current element
+	b) if current element same as candidate increment votes
+	c) else : decrement votes
+
+
+Code:
+       votes = 0
+       cand = None
+
+
+       for num in nums:
+           if votes==0:
+               cand = num
+
+
+           if cand==num:
+               votes += 1
+
+
+           else:
+               votes -=1
+
+
+       return cand
+
+
+
+
+Time Complexity => O(n)
+Space Complexity => O(1)
+
