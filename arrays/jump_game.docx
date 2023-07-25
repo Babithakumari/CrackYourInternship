@@ -1,0 +1,36 @@
+Approach 1: Greedy Approach
+1) Let last position be the goal to attain
+2) Traverse the array backwards
+3) Check if it is possible to reach the goal(n-1 th position) by using the value at n-2 th position. If so, update the goal to (n-2) th position.
+4)Now check if it is possible to reach (n-2) from (n-3) th position , shift goal again
+Do this until array ends(or 0 index reach)
+5) If goal reached index 0, it is possible to find a path, otherwise not possible, return 0
+Time Complexity => O(n)
+Space COmplexity => O(1)
+
+
+Code:
+       n = len(nums)
+
+
+       goal = n-1
+
+
+       for i in range(n-2, -1, -1):
+
+
+           if i+nums[i] >= goal:
+               goal = i
+
+
+              
+
+
+       if goal == 0:
+           return True
+       return False
+
+
+This problem can also be solved in DP manner, by finding all possible ways to reach end, but timecomplexity is much higher.O(n^2)
+
+
