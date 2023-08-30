@@ -1,0 +1,45 @@
+Let us elaborate the problem a little more. Basically, 
+we are given an array of integers and we need to arrange this array in an order such that 
+1st element is lesser than 2nd element, 2nd element is greater than 3rd element, 
+3rd element is lesser than 4th element, 4th element is greater than 5th element, so on. 
+In short, the order of elements in the output zig-zag array would be 
+[1st < 2nd > 3rd < 4th > 5th < 6th > 7th]. 
+Therefore, if the given input array is [4, 3, 7, 8, 6, 2, 1], 
+one of the arrangement in zig-zag array would be [3, 7, 4, 8, 2, 6, 1].
+
+Approach: Merge sort 
+1) sort the array and swap alternate pairs(except first)
+
+Time -> O(nlogn)
+
+Approach : One pass
+1) just traverse the linked list and keep a flag that denotes order in which elements to be
+there. Suppose flag="<" but cur > cur.next, swap them(swap their values only)
+otherwise do nothing
+
+CODE:
+def zigZagList(head):
+
+    flag = "<"
+    temp = head
+
+    while temp and temp.next:
+
+        if (flag == "<" and temp.data > temp.next.data) or (flag == ">" and temp.data < temp.next.data):
+            # swap
+            dummy = temp.data
+            temp.data = temp.next.data
+            temp.next.data = dummy
+
+        # change flag
+        if flag == ">":
+            flag = "<"
+        else:
+            flag = ">"
+
+        temp = temp.next
+
+    return head
+
+ 
+    

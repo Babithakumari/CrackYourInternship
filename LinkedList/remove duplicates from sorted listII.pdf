@@ -1,0 +1,45 @@
+Given the head of a sorted linked list, delete all nodes that have duplicate numbers, 
+leaving only distinct numbers from the original list. 
+Return the linked list sorted as well.
+
+Approach:
+1) keep traversing linked list
+2) if current node and next node do not hold same value(not a duplicate), attach 
+current node to result( make sure to extract this node separately, that is save all nodes
+after this node separately and mark its next field to null)
+3) Otherwise keep moving until no more duplicates exist, ensure to remove all duplicates even
+the original
+        
+        
+
+CODE:        
+        
+        cur = head
+        start = dummy = ListNode()
+
+        while cur and cur.next:
+
+            if cur.val != cur.next.val:
+                dummy.next = cur
+
+                # keep reference of all nodes after cur
+                after = cur.next
+                # mark next field of cur node to none
+                cur.next = None
+
+                # move ahead
+                dummy = dummy.next
+                cur = after
+
+            elif cur.val == cur.next.val:
+                
+                while cur.next and cur.val == cur.next.val:
+                    cur = cur.next
+                
+                # remove current node as it had duplicates previously
+                cur = cur.next
+
+        if cur:
+            dummy.next = cur
+
+        return start.next

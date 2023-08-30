@@ -1,0 +1,5 @@
+same as partition list
+maintain even and odd sublists
+
+Time - O(n)
+Space - O(1)

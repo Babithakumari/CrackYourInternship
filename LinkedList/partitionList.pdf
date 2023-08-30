@@ -1,0 +1,47 @@
+Given the head of a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+
+You should preserve the original relative order of the nodes in each of the two partitions.
+
+ Solution:
+ 1) Using extra space:
+ -> store all values less than x in 1 list
+ -> store all values greater than or equal to x in 2nd list
+ -> create a new list with givn values
+
+ 2) Using constant space
+ -> traverse the linked list:
+    if value < x:
+        put node to left sublist
+    else 
+        put node to right sublist
+
+-> join left sublist to start of right sublist
+-> return head
+
+CODE:
+        small = left = ListNode()
+        large = right = ListNode()
+
+        temp = head
+        while temp:
+            if temp.val < x:
+                left.next = temp
+                left = left.next
+
+            else:
+                right.next = temp
+                right = right.next
+
+            # store reference of all nodes after temp
+            after = temp.next
+            # remove next reference for the temp node
+            temp.next = None
+
+            # move to next node in sequence
+            temp = after
+            
+
+        # connect left and right sublists
+        left.next = large.next
+
+        return small.next
