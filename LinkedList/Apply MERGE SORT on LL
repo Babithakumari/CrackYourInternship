@@ -1,0 +1,84 @@
+Merge sort is often preferred for sorting a linked list. 
+The slow random-access performance of a linked list makes some other algorithms 
+(such as quicksort) perform poorly,
+ and others (such as heapsort) completely impossible
+
+ Approach:
+ 3 functions:
+
+ 1) getMidNode: returns the midNode of an LL
+ use of slow and fast ptr
+
+ 2) mergeSort: applies mergeSort on leftsorted half and rightsorted half followed by
+ merging of the sorted halves
+ At each step we check if head is None, return 
+ Otherwise, find midNode, apply mergeSort separately on left-mid and mid-right
+ finally merge (left-mid, mid-right)
+ return merged list
+
+ 3) merge: function to merge the sorted halves
+ takes 2lists as input
+ if 1 is empty return the other
+ otherwise if value of 1st node in 1st list <= 1st node in 2nd list:
+    make 1st node in 1st list as result
+    evaluate rest of the merging by applying merge on 2nd node to last of 1st list and 2nd list
+similarly if above condition false, do in 2nd list
+
+CODE:
+
+class Solution:
+    
+    def getMidNode(self, head):
+        
+        if not head:
+            return head
+            
+        slow = head
+        fast = head.next
+        
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            
+        return slow
+        
+    
+    
+    def merge(self, l1,l2):
+        
+        res = None
+        
+        if not l1:
+            return l2
+            
+        if not l2:
+            return l1
+            
+        if l1.data <= l2.data:
+            res = l1
+            res.next = self.merge(l1.next, l2)
+            
+        else:
+            res = l2
+            res.next = self.merge(l1, l2.next)
+            
+        return res
+        
+        
+    
+    #Function to sort the given linked list using Merge Sort.
+    def mergeSort(self, head):
+        
+        if not head or not head.next:
+            return head
+            
+        midNode = self.getMidNode(head)
+        afterMidNode = midNode.next
+        midNode.next = None
+        
+        left = self.mergeSort(head)
+        right = self.mergeSort(afterMidNode)
+        
+        sortedList = self.merge(left, right)
+        return sortedList
+        
