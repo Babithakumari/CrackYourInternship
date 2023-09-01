@@ -1,0 +1,59 @@
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+
+Merge all the linked-lists into one sorted linked-list and return it.
+
+Approach:
+1) use merge sort Approach
+2) merge pairs of linkedlists together
+suppose 5 7 3 8
+first 5 7 and then 3 8 finally merge these together 3 5 7 8
+3) keep merging until a single ll found
+
+time -> O(klogn)
+
+CODE:
+
+   def mergeLists(self, list1, list2):
+        dummy = head = ListNode()
+
+        while list1 and list2:
+            if list1.val < list2.val:
+                dummy.next = list1
+                list1 = list1.next
+
+            else:
+                dummy.next = list2
+                list2 = list2.next
+
+            dummy = dummy.next
+
+        if list1:
+            dummy.next = list1
+
+        if list2:
+            dummy.next = list2
+
+        return head.next
+
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+
+        if not lists:
+            return None
+
+        k = len(lists)
+        
+        while len(lists) > 1:
+            newList = []
+
+            # create pairs of list
+            for i in range(0, len(lists), 2):
+                l1 = lists[i]
+                l2 = lists[i+1] if (i+1)<len(lists) else None
+
+                newList.append(self.mergeLists(l1,l2))
+
+            # update lists to mergedList
+            lists = newList
+
+        return lists[0]
+

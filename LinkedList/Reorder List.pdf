@@ -1,0 +1,60 @@
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+
+Approach:
+1) find mid node(use of slow and fast ptrs)
+2) reverse the ll from mid to last
+3) traverse ll from start to mid, at each point connect Ai-th node
+with A(n-i)th node
+
+CODE:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+
+        slow,fast = head,head.next
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        # slow points to mid node(in even and odd both)
+
+       
+        # reverse the ll
+        prev = None
+        temp = slow.next
+        slow.next = None
+
+        while temp:
+            after = temp.next
+            temp.next = prev
+            prev = temp
+            temp = after
+
+        last = prev
+        cur = head
+        
+        
+        while last:
+            # save all nodes after curr
+            dummy_cur = cur.next
+            # save all nodes after last
+            dummy_last = last.next
+
+            # attach
+            cur.next = last
+            last.next = dummy_cur
+
+            # update
+            cur = dummy_cur
+            last = dummy_last
+
+
+
