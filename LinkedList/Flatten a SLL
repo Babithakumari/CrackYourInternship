@@ -1,0 +1,110 @@
+Given a linked list where every node represents a linked list and contains two pointers of its type: 
+
+    Pointer to next node in the main list (we call it ‘right’ pointer in the code below) 
+    Pointer to a linked list where this node is headed (we call it the ‘down’ pointer in the code below). 
+
+Note: All linked lists are sorted and the resultant linked list should also be sorted
+
+Examples: 
+
+    Input:        5   ->  10 ->  19 ->   28
+                  |       |       |       |
+                  V       V       V       V
+                  7      20      22      35
+                  |               |       |
+                  V               V       V
+                  8               50     40
+                  |                       |
+                  V                       V
+                30                       45
+
+Approach:
+
+1) Use merge sort:
+ a) Base case : if head is empty of head.right is empty, return head
+ b) Otherwise perform merge sort on current linkedlist(head) and its right sublist
+ c) Merge current sublist and right sublist
+ d) return root
+
+Merge:
+a) if l1 is empty return l2
+b) if l2 is empty return l1
+c) if l1.data < l2.data:
+    res = l1
+    perform merge between l1's down pointer and l2
+
+d) if l2.data < l1.data:
+    res = l2
+    perform merge between l2's down ptr(sublist) and l1 itself
+
+e) return res
+
+
+CODE:
+def merge(l1,l2):
+    res = None
+    
+    if not l1:
+        return l2
+        
+    if not l2:
+        return l1
+        
+    if l1.data <= l2.data:
+        res = l1
+        res.bottom= merge(l1.bottom, l2)
+        
+    else:
+        res = l2
+        res.bottom = merge(l1, l2.bottom)
+       
+       
+    res.right = None 
+    return res
+
+def flatten(root):
+    #Your code here
+    if not root or not root.next:
+        return root
+        
+    # apply merge sort on right subhalf
+    root.right = flatten(root.next)
+    
+    # now merge current list and right sublist
+    def merge(l1,l2):
+    res = None
+    
+    if not l1:
+        return l2
+        
+    if not l2:
+        return l1
+        
+    if l1.data <= l2.data:
+        res = l1
+        res.bottom= merge(l1.bottom, l2)
+        
+    else:
+        res = l2
+        res.bottom = merge(l1, l2.bottom)
+       
+       
+    res.right = None 
+    return res
+
+def flatten(root):
+    #Your code here
+    if not root or not root.next:
+        return root
+        
+    # apply merge sort on right subhalf
+    root.right = flatten(root.next)
+    
+    # now merge current list and right sublist
+    root = merge(root, root.right)
+
+    return root
+
+    
+
+

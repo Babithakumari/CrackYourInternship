@@ -1,0 +1,49 @@
+430. Flatten a Multilevel Doubly Linked List
+
+
+Given the head of the first level of the list, flatten the list so that all the nodes appear in a single-level, doubly linked list. Let curr be a node with a child list. The nodes in the child list should appear after curr and before curr.next in the flattened list.
+
+Return the head of the flattened list. The nodes in the list must have all of their child pointers set to null.
+
+ 
+
+    Put head of our list to stack and start to traverse it: pop element from it and add two two elements instead: its next and its child. The order is important: we first want to visit child and then next, that is why we put child to the top of our stack.
+    Each time we pop last element from stack, I write it to auxilary order list.
+    Last step is to rebuild from our order list flattened doubly linked list.
+
+Complexity: time complexity is O(n), where n is number of nodes in our list
+
+CODE
+
+def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
+
+        # empty list
+        if not head:
+            return head
+
+        dummy = res = ListNode(0)
+        stack = []
+        stack.append(head)
+
+        while stack:
+            last = stack.pop()
+
+            if last.next:
+                stack.append(last.next)
+
+            if last.child:
+                stack.append(last.child)
+
+            dummy.next = last
+            last.prev = dummy
+            last.child = None
+
+            dummy = dummy.next
+
+
+        res = res.next
+        res.prev  = None
+
+        return res
+
+            
