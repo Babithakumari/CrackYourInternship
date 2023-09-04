@@ -1,0 +1,60 @@
+Approach 1:
+could use index 0 to mid for stack 1 and mid to last for stack 2
+problem is if we end up filling all spaces for stack 1 that is start to mid
+and no element for stack2, then overflow occurs even if there is spaces
+
+Time : 
+Push - O(1)
+Pop - O(1)
+
+Space:
+O(n)
+
+Approach 2:
+A better way is to use index 0 as stack 1, therefore initially top of stack1 = -1
+and last index as the start of stack2 , top of stack2 = len(arr)
+
+class TwoStacks:
+    def __init__(self, n=100):
+        self.size = n
+        self.arr = [0] * n
+        self.top1 = -1
+        self.top2 = n
+
+    # Function to push an integer into stack 1
+    def push1(self, x):
+        if self.top2 == self.top1+1:
+            return -1
+            
+        self.top1 += 1
+        self.arr[self.top1] = x
+
+    # Function to push an integer into stack 2
+    def push2(self, x):
+        if self.top2 == self.top1+1:
+            return -1
+            
+        self.top2 -= 1
+        self.arr[self.top2] = x
+        
+
+    # Function to remove an element from top of stack 1
+    def pop1(self):
+        if self.top1 >= 0:
+            val = self.arr[self.top1]
+            self.arr[self.top1] = 0
+            self.top1 -= 1
+            return val
+            
+        return -1
+
+    # Function to remove an element from top of stack 2
+    def pop2(self):
+        if self.top2 < len(self.arr):
+            val = self.arr[self.top2]
+            self.arr[self.top2] = 0
+            self.top2 += 1
+            return val
+            
+        return -1
+

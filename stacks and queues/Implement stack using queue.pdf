@@ -1,0 +1,61 @@
+
+
+Approach 1: 2 queues and push is O(n)
+Push:
+whenever pushing a new ele put into new queue
+copy all ele from q1 into q2, therefore new element at front as expected of a stack
+copy q2 into q1
+
+Pop:
+just pop from left
+
+top:
+return 0-th ele
+
+Empty:
+check if q1 is empty
+
+SOlution:
+
+def push(self, x: int) -> None:
+        
+        # add element to new queue
+        self.q2.append(x)
+        # pop elements from q1 to q2 therefore new element at front(as a stack behaves)
+        while self.q1:
+            self.q2.append(self.q1.popleft())
+
+        # copy all elements of q2 into q1
+        self.q1 = self.q2
+        self.q2 = deque()
+
+        
+
+
+        
+
+    def pop(self) -> int:
+        return self.q1.popleft()
+        
+
+    def top(self) -> int:
+        return self.q1[0]
+        
+
+    def empty(self) -> bool:
+        return not self.q1
+        
+
+Approach 2: single queue
+just invert the order of elements during every push 
+
+def push(self, x: int) -> None:
+        # add element to queue
+        self.q1.append(x)
+
+        n = len(self.q1)
+
+        # reverse order by popping and pushing all over again
+        while n>1:
+            self.q1.append(self.q1.popleft())
+            n-=1

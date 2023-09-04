@@ -1,0 +1,10 @@
+Approach
+1) if not an operator push to stack
+2) if operator:
+    op2 and then op1 popped
+    perform operation
+    add result to stack
+
+3) return stack[-1]
+
+NOTE : for division=> int(op1/op2)
