@@ -1,0 +1,61 @@
+given a binary matrix, task is to find the distance of each cell from its nearest 1
+
+Approach : Brute force
+1) for each cell
+    2) traverse the matrix to find nearest 1
+
+time = O(n^2* m^2)
+space = O(n*m)
+
+Approach : efficient/bfs/ multisource bfs
+Reverse Approach
+1) The idea is to find all cells holding value 1 and add them to queue
+2) now until queue is empty:
+    find all neighbours of current cell, if any cell holds 0(to find nearest 1 for this):
+        check if dist[neighbour] > dist[currentcell] + 1:
+        if so update distance to min value
+
+3) return dist matrix
+
+time = O(m*n)
+
+CODE:* this is sol for finding distance of nearest 0, reverse the logic
+
+        r = len(mat)
+        c = len(mat[0])
+        
+        queue = deque()
+        visited = set()
+            
+        # find all zeroes
+        dist = []
+        for i in range(r):
+            dist.append([0]*c)
+            for j in range(c):
+                if mat[i][j] == 0:
+                    dist[i][j] = 0
+                    queue.append((i,j))
+                else:
+                    dist[i][j]  = sys.maxsize
+                    
+        while queue:
+            u,v = queue.popleft()
+                
+            if (u,v) in visited:
+                continue
+                    
+            visited.add((u,v))
+                
+            neighbours = [(u,v-1),(u,v+1),(u-1,v),(u+1,v)]
+                
+            for x,y in neighbours:
+                if x>=0 and x<r and y>=0 and y<c and mat[x][y]==1:
+                    if dist[x][y] > dist[u][v]+1:
+                        dist[x][y] = dist[u][v]+1
+                        queue.append((x,y))
+                
+            
+            
+        return dist
+                
+        

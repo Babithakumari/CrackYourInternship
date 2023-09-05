@@ -1,0 +1,9 @@
+approach:
+1) find all cells containing rotten oranges, also count no of fresh oranges
+2) while queue and fresh:
+        for each entry in queue at current instance:
+            find its neigbours, if fresh, mark as rotten, add to queue, decrement fresh
+
+        increment time
+
+3) return time if fresh=0 else return -1
