@@ -1,0 +1,32 @@
+https://leetcode.com/problems/flatten-nested-list-iterator/description/
+
+Implement the NestedIterator class:
+
+    NestedIterator(List<NestedInteger> nestedList) Initializes the iterator with the nested list nestedList.
+    int next() Returns the next integer in the nested list.
+    boolean hasNext() Returns true if there are still some integers in the nested list and false otherwise.
+
+Your code will be tested with the following pseudocode:
+
+initialize iterator with nestedList
+res = []
+while iterator.hasNext()
+    append iterator.next() to the end of res
+return res
+
+
+Solution 1: Use of stack
+__init__ => intialize a stack that stores the nested list(reverse the list)
+next     => pop the item from stack
+hasNext  => while stack is not empty, 
+            pop top:
+            if top is an integer: return true
+            otherwise get the reversed form of the topList and add it to stack
+
+Solution 2: Use of deque
+
+__init__ => initialize with a deque
+Extra function: fixQ => pop left most item(which is a list), now add them one by one to the left of the queue
+next => pop top most item, if integer return it otherwise fixQ and then return next()
+hasNext => while queue is not empty, if it is not an integer and needs fixing fix it
+otherwise check if queue is empty
