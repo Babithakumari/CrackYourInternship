@@ -1,0 +1,41 @@
+Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+
+ 
+          1 
+        / | \
+        2 |  2
+       / \|  / \
+       3 4|  4  3
+
+       Symmetric around its root
+
+Approach:
+
+Recursion:
+At each point, check if node's left and right node are symmetric and do this recursively
+I.e check if current node's are equal and recursively check for their children.
+
+
+CODE:
+
+   def traversal(self,left,right):
+        
+        # if both left and right child null then its symmetric
+        if not left and not right:
+            return True
+        
+        # if only one of them is null, its not symmetric
+        if not left or not right:
+            return False
+
+        if left.val != right.val:
+            return False
+        
+        # symmetric only when left and right subtrees are equal, must be true recursively
+        #print(f"left={left.val} right={right.val} l={left.left.val} r= ")
+        return (self.traversal(left.left,right.right) and self.traversal(left.right,right.left))
+        
+        
+        
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        return self.traversal(root.left,root.right)
