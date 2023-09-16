@@ -1,0 +1,62 @@
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+
+ 
+ Approach: recursively
+ idea is at point we check if nodes are equal, if unequal return false
+ if true, check same for its children.
+
+ base case, if both trees become null, they are same
+ if either tree is null, they are not same.
+
+ CODE:
+         if not p and not q:
+            return True
+
+        if not p or not q:
+            return False
+
+        if p.val != q.val:
+            return False
+
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+
+ITerative, same thing using queue.
+
+CODE:
+
+        def check(p,q):
+            # if both are None
+            if not p and not q:
+                return True
+            
+            # if one of them is None
+            if not p or not q:
+                return False
+            
+            # if values don't match
+            if p.val!=q.val:
+                return False
+            return True
+            
+            
+            
+        queue = deque()
+        queue.append((p,q))
+        
+        while queue:
+            p,q = queue.popleft()
+            
+            # If check returns False, return False, else check for other numbers
+            if not check(p,q):
+                return False
+            
+            if p:
+                queue.append((p.left,q.left))
+                queue.append((p.right,q.right))     
+                
+                
+                
+        return True

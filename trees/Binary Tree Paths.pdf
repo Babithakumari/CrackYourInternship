@@ -1,0 +1,61 @@
+Given the root of a binary tree, return all root-to-leaf paths in any order.
+
+A leaf is a node with no children.
+
+ 
+
+ Approach:
+ RECURSION
+ ---------
+ idea: 
+ from current node, 2paths exists, left and right, both of these may form subpaths to leaf
+ therefore first depth search left subtree to find the path to leaf
+ similarly depth search right subtree to find path to leaf.
+
+ Base case: if not root, return
+ if leaf node, add path to result
+
+
+CODE:
+    def dfs(root, path):
+            
+            if not root:
+                return
+
+            if not root.left and not root.right:
+                res.append(path)
+
+            if root.left:
+                dfs(root.left, path + "->" + str(root.left.val))
+
+            if root.right:
+                dfs(root.right, path + "->" + str(root.right.val))
+
+        dfs(root, str(root.val))
+        return res
+
+
+Approach: Iterative(same as recursion, just use a stack)
+CODE:
+       stack = []
+        stack.append((root,str(root.val)))
+        res = []
+
+        while stack:
+            node, path = stack.pop()
+
+            if not node:
+                return
+
+            if not node.left and not node.right:
+                res.append(path)
+
+            if node.left:
+                stack.append((node.left, path+ "->"+ str(node.left.val)))
+
+            if node.right:
+                stack.append((node.right, path+ "->" + str(node.right.val)))
+
+        return res
+
+
