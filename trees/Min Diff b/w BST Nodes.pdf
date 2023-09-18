@@ -1,0 +1,56 @@
+Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+
+ 
+ Approach - MIne
+ 1) Traverse the tree(inorder traversal) to generate a sorted array.
+ 2) find difference b/w adjacent pairs
+ [1,2,3,4,6]
+ diff = 1 1 1 2=> 1
+
+
+         path = []
+
+        def inorder(root):
+            if not root:
+                return
+
+            
+            inorder(root.left)
+            path.append(root.val)
+            inorder(root.right)
+
+        inorder(root)
+        minDiff = abs(path[0]-path[1])
+        
+        for i in range(len(path)-1):
+            curDiff = abs(path[i] - path[i+1])
+            minDiff = min(minDiff, curDiff)
+
+        return minDiff
+
+Otherwise, use dfs
+start from prev=None, cur = root, do inorder(left root right)
+
+
+CODE:
+       prev = None
+        minDiff = sys.maxsize
+
+        def dfs(root):
+            if not root:
+                return
+
+            nonlocal prev,minDiff
+            dfs(root.left)
+
+            # root node processed
+            if prev:
+                minDiff = min(minDiff, abs(prev.val-root.val))
+
+            # current node becomes prev, as it is processed
+            prev = root
+
+            dfs(root.right)
+
+        dfs(root)
+        return minDiff

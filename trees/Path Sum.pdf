@@ -1,0 +1,48 @@
+Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+
+A leaf is a node with no children.
+
+Approach:
+start from root, keep dfs-ing, until curSum == targetSum, if so return True
+recursive call: dfs(root.left) and root.right
+
+Note that: we do not consider curSum<targetSum or >targetSum conditions, as negative values
+can exist.
+
+RECURSION:
+       def dfs(root, curSum):
+            if not root:
+                return 
+
+            if curSum + root.val == targetSum and not root.left and not root.right:
+                return True
+
+            return dfs(root.left, curSum + root.val) or dfs(root.right, curSum + root.val)
+
+        
+
+
+        return dfs(root, 0)
+        
+ITERATIVE:
+           if not root:
+            return False
+        
+        else:
+            # Finding all possible paths
+            queue = deque()
+            queue.append((root,root.val))
+            
+            while queue:
+                node,curSum = queue.popleft()
+                
+                if not node.left and not node.right and curSum == targetSum:
+                    return True
+            
+                if node.left:
+                    queue.append((node.left,node.left.val+curSum))
+                    
+                if node.right:
+                    queue.append((node.right,node.right.val+curSum))
+                    
+            return False

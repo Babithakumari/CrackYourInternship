@@ -1,0 +1,45 @@
+Given a binary search tree (BST), find the lowest common ancestor (LCA) node of two given nodes in the BST.
+
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
+
+
+
+Approach: NOTE THAT THIS IS A BST
+
+Case 1: p=2, q=8. Both on different sides of a bst
+  6
+/   \
+2    8
+here 6 is the split point. 2<6<8(p<root<q) or there can be (q<root<p)
+
+Case 2: p=2 q=4. Both on same side of bst
+
+    2
+   / \
+   0  4
+here root = p or it can be root = q. If so return immediately, no need to check if q actually exists
+It is guaranteed that they will exist.
+And all nodes are unique.
+
+
+Idea:
+To traverse the tree, such that if both p and q are less than current node,
+the lca is bound to exist on left side of subtree
+otherwise if both p and q are greater than current node,
+the lca is bound to exist on right side of subtree
+otherwise, we found the split point, or p==root or q==root, therefore return.
+
+Code:
+
+        cur = root
+
+        while cur:
+
+            if p.val > cur.val and q.val > cur.val:
+                cur = cur.right
+
+            elif p.val < cur.val and q.val < cur.val:
+                cur = cur.left
+
+            else:
+                return cur
