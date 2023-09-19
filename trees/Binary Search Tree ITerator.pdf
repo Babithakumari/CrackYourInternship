@@ -1,0 +1,59 @@
+Implement the BSTIterator class that represents an iterator over the in-order traversal of a binary search tree (BST):
+
+    BSTIterator(TreeNode root) Initializes an object of the BSTIterator class. The root of the BST is given as part of the constructor. The pointer should be initialized to a non-existent number smaller than any element in the BST.
+    boolean hasNext() Returns true if there exists a number in the traversal to the right of the pointer, otherwise returns false.
+    int next() Moves the pointer to the right, then returns the number at the pointer.
+
+
+Approach1: Naive
+1) traverse the tree,store the traversal in an array
+2) keep a pointer that points to -1
+3) for every call to next, increment ptr, return the node at that position
+3) for every call to hasNext, check if ptr has reached end of array, if so return False, otherwise return True.
+
+Time -> O(1) for next and hasNext
+Space -> O(n) 
+
+Approach2: Efficient
+Idea is to use an Inorder Iterative DFS
+1) Go as far left as possible. store these nodes in a stack
+2) now whenever u pop from the stack, ensure node.right is empty.
+if not, add the right node to stack, and again go as far left as possible from this node.
+(Because node.left is already visited if it ever existed)
+
+CODE:
+
+   def __init__(self, root: Optional[TreeNode]):
+        self.stack = []
+        self.insert(root)
+
+
+
+    def insert(self, root):
+        while root:
+            self.stack.append(root)
+            root = root.left
+
+
+
+
+    def inorder(self, root):
+        if not root:
+            return
+
+        self.inorder(root.left)
+        self.path.append(root.val)
+        self.inorder(root.right)
+
+        
+
+    def next(self) -> int:
+        node = self.stack.pop()
+
+        if node.right:
+            self.insert(node.right)
+        return node.val
+        
+
+    def hasNext(self) -> bool:
+        return self.stack

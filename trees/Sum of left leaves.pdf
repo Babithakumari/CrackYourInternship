@@ -1,0 +1,53 @@
+Given the root of a binary tree, return the sum of all left leaves.
+
+A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
+
+ 
+Approach:
+1) Traverse the tree(iterative/recursively)
+2) assign each node with a label(left mid right) based on where it appears in the tree
+3) when visiting a node, check for label, if "left" and is  a leaf, add to leftSum
+4) return leftSum
+
+Code:
+        leftSum = 0
+
+        def dfs(node,label):
+            if not node:
+                return
+
+            nonlocal leftSum
+            if label=="left" and not node.left and not node.right:
+                leftSum += node.val
+
+            dfs(node.left, "left")
+            dfs(node.right, "right")
+
+        dfs(root, "NA")
+        return leftSum
+
+Code(ITerative):
+
+        sum_of_left= 0
+        queue = deque()
+        
+        # (node,position) => position can be left,right,mid
+        queue.append((root,"mid"))
+        
+        while queue:
+            node,position = queue.popleft()
+            
+            if node.left:
+                queue.append((node.left,"left"))
+                
+            if node.right:
+                queue.append((node.right,"right"))
+              
+            # leaf node encountered
+            if not node.left and not node.right:
+                # check if leaf is left or right positioned
+                if position=="left":
+                    sum_of_left+=node.val
+                
+                
+        return sum_of_left

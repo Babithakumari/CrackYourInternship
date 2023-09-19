@@ -1,0 +1,60 @@
+
+
+
+Approach 1: Brute force
+We can simply store the inorder traversal of the given tree in the array, and then find the element just smaller and greater than the target value present in the array.
+
+Time = O(N)
+Space = O(N)
+
+Approach 2: Using the idea of binary search
+1) predecessor => max value on left subtree of a given node
+2) successor => min value on right subtree of a given node
+
+Case 1: if not root=> return
+Case 2: if root < key => current node becomes pre and move to right to find successor
+Case 3: if root > key => current node becomes suc and move to left to find predecessor
+Case 4: if root == key => 
+a) find the maximum value on the left subtree
+b) find the minimum value on the right subtree
+
+
+CODE:
+
+    def findPreSuc(self, root, pre, suc, key):
+        # Your code goes here
+        if not root:
+            print(f"pre={pre.key} suc={suc.key}")
+            return
+        
+        if root.key==key:
+            # root.key = key
+            # finding maximum value on the left subtree= predecessor
+            
+            if root.left:
+                cur = root.left
+            
+                while cur.right:
+                    cur = cur.right
+                    
+                findPreSuc.pre = cur
+            
+            if root.right:
+                cur = root.right
+            
+                # finding minimum value on the right subtree
+                while cur.left:
+                    cur = cur.left
+                    
+                findPreSuc.suc = cur
+                
+            return
+        
+        elif root.key < key:
+            findPreSuc.pre = root
+            self.findPreSuc(root.right, pre,suc,key)
+            
+        else:
+            findPreSuc.suc = root
+            print(f"suc={suc.key}")
+            self.findPreSuc(root.left, pre, suc, key)
