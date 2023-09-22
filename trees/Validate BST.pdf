@@ -1,0 +1,42 @@
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+    The left
+    subtree
+    of a node contains only nodes with keys less than the node's key.
+    The right subtree of a node contains only nodes with keys greater than the node's key.
+    Both the left and right subtrees must also be binary search trees.
+
+ 
+ My approach:
+ 1) suppose current node.
+ 2) check if node.left < node < node.right
+ 3) now check this for left and right subtrees.
+ 4) if at any point mismatch found, return False
+
+ Problem with this approach:
+
+ suppose we have:
+      5
+     / \
+     1  4
+        / \
+        3 6
+
+if u see, node 3 < node 4 < node 6. But node 3 is less than root. therefore not a valid bst.
+
+Brute force:
+1) take root node and compare it with all nodes on its left, such that they are less than root
+2) similarly compare root node with all nodes on its right, such that they are greater than root.
+3) if at any mismatch return False
+4) return True
+
+O(N^2)
+
+Efficient approach
+1) 2 extra variables, upper limit and lower limit
+2) when moving left, upper limit changes from infinite to current node's value
+3) when moving right, lower limit changes.
+do a simple dfs, at any point if current node < lower bound or greater than its upper bound, return False
+

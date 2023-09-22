@@ -1,0 +1,34 @@
+Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+
+n=0: only 1 tree generated
+n=1: only 1 tree generated
+n=2: 1
+      \
+        2    or  2 and left child 1 therefore 2 ways.
+    
+similary when n=3 we can consider the case where 1 is root node, 2 is root node, 3 is root node
+add all of these to get number of trees when n=3
+
+CODE:
+   def numTrees(self, n: int) -> int:
+
+        numOfTrees = [1]*(n+1)
+        numOfTrees[0] = 1 # when 0 nodes, 1 tree possible
+        numOfTrees[1] = 1 # when 0 nodes, 1 tree possible
+
+        for curNode in range(2, n+1):
+            total = 0
+
+            for root in range(1, curNode+1):
+
+                # assume we have to find numOfTrees for 2 nodes, for that we find case 1: when1 is root node, then when 2 is rootNode and so on, and then sum them up.
+                left = root - 1
+                right = curNode - root
+                
+                total += numOfTrees[left] * numOfTrees[right]
+
+            
+            numOfTrees[curNode] = total
+
+
+        return numOfTrees[n]

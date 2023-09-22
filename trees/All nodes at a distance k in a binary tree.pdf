@@ -1,0 +1,75 @@
+
+Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node.
+
+You can return the answer in any order.
+
+Approach:
+1) Map every child to its parent, to perform backward traversal
+2) If target node not given and only value given, find the target node first by traversing the tree
+3) Start from target. Perform bfs(target, steps=0):
+    get curNode and steps by popping from queue
+    a) if not root: return
+    b) if steps == k: add node to result.
+    c) otherwise : add all its neighbours also parent into queue (increment steps)
+    return result
+
+CODE:
+       def bfs(node, steps):
+            queue = deque()
+            queue.append((node, 0))
+            visited = set()
+            res = []
+
+            while queue:
+                curNode,steps = queue.popleft()
+
+                if curNode in visited:
+                    continue
+
+
+                visited.add(curNode)
+
+                if steps == k:
+                    res.append(curNode.val)
+
+                else:
+                
+                    if curNode.left:
+                        queue.append((curNode.left, steps+1))
+
+                    if curNode.right:
+                        queue.append((curNode.right, steps+1))
+
+                    # add parent of the node too
+                    if curNode in hashMap:
+                        queue.append((hashMap[curNode], steps+1))
+
+
+            return res
+
+
+            
+
+
+
+        hashMap = {}
+
+        cur = root
+        queue = deque()
+        queue.append(root)
+
+        while queue:
+
+            cur = queue.popleft()
+
+            if cur.left:
+                hashMap[cur.left] = cur
+                queue.append(cur.left)
+            if cur.right:
+                hashMap[cur.right] = cur
+                queue.append(cur.right)
+
+
+        
+
+        return bfs(target, 0)
