@@ -1,0 +1,39 @@
+Given two strings s and part, perform the following operation on s until all occurrences of the substring part are removed:
+
+    Find the leftmost occurrence of the substring part and remove it from s.
+
+Return s after removing all occurrences of part.
+
+A substring is a contiguous sequence of characters in a string.
+
+ 
+
+ 
+ aabababa  subs = aba
+  ---
+a    baba
+-    --
+
+answer = ba not ab
+
+Approach:
+
+Brute force:
+old_s = s
+1) do this n-times:
+    a) start from index = 0
+    b) find all substrings in s of len(subs)
+    c) compare with subs, if matched, create new substring such that matched string deletd
+        s = s[:i]+s[i+k:]
+    d) if old_s == s, no more such patterns available. stop searching
+
+
+Efficient approach:
+Use of stack
+1) keep adding current letter to stack
+2) if stack size is greater than or equal to subs, begin a loop and compare top of stack with last
+letter of subs:
+    if same, pop from stack(store popped elements in temp meanwhile)
+do this until some mismatch found, if so, begin pushing all popped ele back to stack(pattern not found)
+
+3) finally return stack

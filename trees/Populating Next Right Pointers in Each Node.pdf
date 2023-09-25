@@ -1,0 +1,25 @@
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+
+Initially, all next pointers are set to NULL.
+
+Approach:
+just bfs level-wise, map each node to its neighbouring right node in a level order traversal
+
+time O(n)
+space O(n)
+
+Approach:
+    1
+   / \
+  2   3
+  /\  /\
+  4 5 6 7
+
+for every node, node.left.next = node.right
+
+but wat about neigbouring children
+from this logic 4->5 and 6->7 but wat about 5->6?
+
+its easy, we know 2->3 therefore 2.right.next = 2.next.left
+
+follow this approach.

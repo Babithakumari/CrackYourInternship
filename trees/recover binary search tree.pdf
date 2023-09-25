@@ -1,0 +1,57 @@
+You are given the root of a binary search tree (BST), where the values of exactly two nodes of the tree were swapped by mistake. Recover the tree without changing its structure.
+
+ 
+ Approach1: brute force
+ 1) traverse tree, store path
+ 2) create another sorted path
+ 3) find point of mismatch between the 2 paths
+ Time = O(nlogn) sorted
+ Space = O(n)
+
+ Approach 2: Efficient
+ 1) traverse the tree,
+ 2) ensure prev < current, is mismatched store the point of mismatch
+ Case 1: non adjacent elements swapped
+ 3 25     7   8   10   15   20   5
+   first  mid                    last
+   
+swap first and last
+
+Case 2: adjacent element swapped
+3 5 8       7  10 15 20 25
+    first mid
+
+swap first and mid
+
+CODE:
+        first = mid = last = None
+
+        def inorder(root):
+            if not root:
+                return
+
+            nonlocal first,mid,last,prev
+
+            inorder(root.left)
+            
+            if prev and root.val < prev.val:
+
+                if not first:
+                    first = prev
+                    mid = root
+
+                else:
+                    last = root
+
+            prev = root
+            inorder(root.right)
+
+
+        prev = TreeNode(-sys.maxsize-1)
+        inorder(root)
+        
+        if last:
+            first.val, last.val = last.val, first.val
+
+        else:
+            first.val, mid.val = mid.val,first.val
